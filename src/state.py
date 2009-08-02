@@ -34,53 +34,52 @@ class State:
                                 break
                     # Second daughter, in same place as current
 #                    self.cells.append(Cell(cell.position, cell.dna.mutate()))
-    # Kill current cell
-    cell.health = 0
-else:
-    cell.health = 0
-else:
-    cell.age += 1
+                # Kill current cell
+                    cell.health = 0
+                else:
+                    cell.health = 0
+            else:
+                cell.age += 1
 
-# Remove dead cells
-    for y in range(len(self.cells)):
-        try:
-            if (self.cells[y].health <= 0):
-                self.cells.pop(y)
-        except IndexError:
-            pass
+        # Remove dead cells
+        for y in range(len(self.cells)):
+            try:
+                if (self.cells[y].health <= 0):
+                    self.cells.pop(y)
+            except IndexError:
+                pass
+        self.time += 1
 
-    self.time += 1
+    def __str__(self):
+        return_str = "Cells:"
 
-def __str__(self):
-    return_str = "Cells:"
+        for x in self.cells:
+            return_str += "\n---\n"
+            return_str += str(x)
 
-    for x in self.cells:
-        return_str += "\n---\n"
-        return_str += str(x)
+        return return_str
 
-    return return_str
+    def add_cell(self, cell=Cell((0, 0))):
+        self.cells.append(cell)
 
-def add_cell(self, cell=Cell((0, 0))):
-    self.cells.append(cell)
+    def pop_first_cell(self):
+        return self.cells.pop()
 
-def pop_first_cell(self):
-    return self.cells.pop()
-
-def check_collision(self, cell1):
-    # Check boundary collisions
-    if (cell1.position[0]-cell1.radius < 0) or (cell1.position[0] + cell1.radius > self.dimensions[0]) \
-    or (cell1.position[1]-cell1.radius < 0) or (cell1.position[1] + cell1.radius > self.dimensions[1]):
-        return True
-    # Check cell collisions
-    for cell2 in self.cells:
-        if self.distance_squared(cell2, cell1) < (cell1.radius + cell2.radius) ** 2:
+    def check_collision(self, cell1):
+        # Check boundary collisions
+        if (cell1.position[0]-cell1.radius < 0) or (cell1.position[0] + cell1.radius > self.dimensions[0]) \
+        or (cell1.position[1]-cell1.radius < 0) or (cell1.position[1] + cell1.radius > self.dimensions[1]):
             return True
-        return False
+        # Check cell collisions
+        for cell2 in self.cells:
+            if self.distance_squared(cell2, cell1) < (cell1.radius + cell2.radius) ** 2:
+                return True
+            return False
 
-def distance_squared(self, cell1, cell2):
-    '''Returns the distance between two cells'''
-    dist = (cell1.position[0] - cell2.position[0]) ** 2 + (cell1.position[1] - cell2.position[1]) ** 2
-    if dist > 1:
-        return dist
-    else:
-        return 1
+    def distance_squared(self, cell1, cell2):
+        '''Returns the distance between two cells'''
+        dist = (cell1.position[0] - cell2.position[0]) ** 2 + (cell1.position[1] - cell2.position[1]) ** 2
+        if dist > 1:
+            return dist
+        else:
+            return 1
