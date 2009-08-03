@@ -18,7 +18,7 @@ class State:
         self.cells.append(Cell((dimensions[0]-10, dimensions[1]-10)))
 
     def next(self, speed=0.5):
-	print ('next')
+	print (len(self.cells))
         # Cells older than AGE reproduce
         for cell in self.cells:
 	    print ('next cell')

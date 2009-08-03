@@ -5,7 +5,7 @@ import pygame
 from pygame.locals import *
 from state import State
 
-state = State()
+state = State(dimensions=(500,500))
 pygame.init()
 screen = pygame.display.set_mode(state.dimensions)
 pygame.display.set_caption("Cauto")
@@ -27,7 +27,7 @@ while True:
 
     screen.fill(pygame.Color("white"))
     for cell in state.cells:
-        pygame.draw.circle(screen, pygame.Color("purple"), cell.position, cell.radius)
+        pygame.draw.circle(screen, (255-cell.age*10,255-cell.age*10,255-cell.age*10), cell.position, cell.radius)
         pygame.draw.circle(screen, pygame.Color("red"), cell.position, cell.radius, 1)
     pygame.display.flip()
     state.next()
