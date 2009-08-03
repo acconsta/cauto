@@ -39,7 +39,10 @@ class State:
                 else:
                     cell.health = 0
             else:
-                cell.age += 1
+		break
+	
+	for z in self.cells:
+	    z.age += 1
 
         # Remove dead cells
         for y in range(len(self.cells)):
