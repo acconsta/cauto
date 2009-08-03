@@ -17,7 +17,7 @@ class State:
         self.cells.append(Cell((dimensions[0]-10, 10)))
         self.cells.append(Cell((dimensions[0]-10, dimensions[1]-10)))
 
-    def next(self, speed=1):
+    def next(self, speed=0.5):
 	print ('next')
         # Cells older than AGE reproduce
         for cell in self.cells:
@@ -26,7 +26,7 @@ class State:
 		print ('next mature cell')
                 if cell.health >= 50:
                     # Add two tangent daughter cells
-                    for i in range(2):
+                    for i in range(1):
                         newCell = Cell(cell.position, cell.dna.mutate())
                         start = random.uniform(0, 200 * math.pi)
                         for theta in range(start, start + 200 * math.pi, 200 * math.pi / 18):
@@ -36,14 +36,14 @@ class State:
                                 self.cells.append(newCell)
                                 break
                     # Second daughter, in same place as current
-#                    self.cells.append(Cell(cell.position, cell.dna.mutate()))
+                    self.cells.append(Cell(cell.position, cell.dna.mutate()))
                 # Kill current cell
                     cell.health = 0
                 else:
                     cell.health = 0
             else:
 		break
-	
+
 	for z in self.cells:
 	    z.age += speed
 

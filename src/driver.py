@@ -15,7 +15,7 @@ clock = pygame.time.Clock()
 
 while True:
     # Limits simulation frame rate
-    clock.tick(10)
+    clock.tick(100)
 
     # Exit on window close
     for event in pygame.event.get():
@@ -27,7 +27,7 @@ while True:
 
     screen.fill(pygame.Color("white"))
     for cell in state.cells:
-        pygame.draw.circle(screen, pygame.Color("red"), cell.position, cell.radius)
-        pygame.draw.circle(screen, pygame.Color("black"), cell.position, cell.radius, 1)
+        pygame.draw.circle(screen, pygame.Color("purple"), cell.position, cell.radius)
+        pygame.draw.circle(screen, pygame.Color("red"), cell.position, cell.radius, 1)
     pygame.display.flip()
     state.next()
