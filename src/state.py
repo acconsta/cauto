@@ -27,11 +27,12 @@ class State:
                 if cell.health >= 50:
                     # Add two tangent daughter cells
                     for i in range(1):
-                        newCell = Cell(cell.position, cell.dna.mutate())
+                        #newCell = Cell(cell.position, cell.dna.mutate())
                         start = random.uniform(0, 200 * math.pi)
                         for theta in range(start, start + 200 * math.pi, 200 * math.pi / 18):
-                            newCell.position = (cell.position[0] + cell.radius * 2 * math.cos(theta / 100), \
-                                                cell.position[1] + cell.radius * 2 * math.sin(theta / 100))
+                            newCell = Cell((cell.position[0] + cell.radius * 2 * math.cos(theta / 100), \
+                                                cell.position[1] + cell.radius * 2 * math.sin(theta / 100)),\
+					    cell.dna.mutate())
                             if not self.check_collision(newCell):
                                 self.cells.append(newCell)
                                 break
