@@ -34,7 +34,7 @@ class State:
                                 break
                     # Second daughter, in same place as current
 #                    self.cells.append(Cell(cell.position, cell.dna.mutate()))
-                # Kill current cell
+                    # Kill current cell
                     cell.health = 0
                 else:
                     cell.health = 0
