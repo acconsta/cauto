@@ -27,13 +27,12 @@ class State:
                 if cell.health >= 50:
                     # Add two tangent daughter cells
                     for i in range(1):
-                        #newCell = Cell(cell.position, cell.dna.mutate())
+                        newCell = Cell(cell.position, cell.dna.mutate())
                         start = random.uniform(0, 200 * math.pi)
                         for theta in range(start, start + 200 * math.pi, 200 * math.pi / 18):
-                            newCell = Cell((cell.position[0] + cell.radius * 2 * math.cos(theta / 100), \
-                                                cell.position[1] + cell.radius * 2 * math.sin(theta / 100)),\
-					    cell.dna.mutate())
-                            if not self.check_collision(newCell):
+                            newCell.position = (cell.position[0] + cell.radius * 2 * math.cos(theta / 100), \
+                                                cell.position[1] + cell.radius * 2 * math.sin(theta / 100))
+                            if not self.check_collision(cell.position[0] + cell.radius * 2 * math.cos(theta / 100),cell.position[1] + cell.radius * 2 * math.sin(theta / 100),cell.radius):
                                 self.cells.append(newCell)
                                 break
                     # Second daughter, in same place as current
@@ -72,21 +71,21 @@ class State:
     def pop_first_cell(self):
         return self.cells.pop()
 
-    def check_collision(self, cell1):
+    def check_collision(self, x, y, radius):
 	print ('Collision check')
         # Check boundary collisions
-        if (cell1.position[0]-cell1.radius < 0) or (cell1.position[0] + cell1.radius > self.dimensions[0]) \
-        or (cell1.position[1]-cell1.radius < 0) or (cell1.position[1] + cell1.radius > self.dimensions[1]):
+        if (x-radius < 0) or (x + radius > self.dimensions[0]) \
+        or (y-radius < 0) or (y + radius > self.dimensions[1]):
             return True
         # Check cell collisions
         for cell2 in self.cells:
-            if self.distance_squared(cell2, cell1) < (cell1.radius + cell2.radius) ** 2:
+            if self.distance_squared(cell2.position[0], cell2.position[1], x, y) < (radius + cell2.radius) ** 2:
                 return True
             return False
 
-    def distance_squared(self, cell1, cell2):
+    def distance_squared(self, x, y, x2, y2):
         '''Returns the distance between two cells'''
-        dist = (cell1.position[0] - cell2.position[0]) ** 2 + (cell1.position[1] - cell2.position[1]) ** 2
+        dist = (x - x2) ** 2 + (y - y2) ** 2
         if dist > 1:
             return dist
         else:
