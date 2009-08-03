@@ -18,9 +18,12 @@ class State:
         self.cells.append(Cell((dimensions[0]-10, dimensions[1]-10)))
 
     def next(self, speed=1):
+	print ('next')
         # Cells older than AGE reproduce
         for cell in self.cells:
+	    print ('next cell')
             if cell.age >= self.AGE:
+		print ('next mature cell')
                 if cell.health >= 50:
                     # Add two tangent daughter cells
                     for i in range(2):
@@ -42,7 +45,7 @@ class State:
 		break
 	
 	for z in self.cells:
-	    z.age += 1
+	    z.age += speed
 
         # Remove dead cells
         for y in range(len(self.cells)):
@@ -69,6 +72,7 @@ class State:
         return self.cells.pop()
 
     def check_collision(self, cell1):
+	print ('Collision check')
         # Check boundary collisions
         if (cell1.position[0]-cell1.radius < 0) or (cell1.position[0] + cell1.radius > self.dimensions[0]) \
         or (cell1.position[1]-cell1.radius < 0) or (cell1.position[1] + cell1.radius > self.dimensions[1]):
