@@ -27,9 +27,9 @@ while True:
 
     screen.fill(pygame.Color("white"))
     #First, draw map
-    #for a  in range(len(state.themap.grid)):
-    #	for b in range(len(state.themap.grid[a])):
-    #       pygame.draw.rect(screen, (255,state.themap.grid[a][b]*245,255),a+state.themap.cell_width,b+state.themap.cell_height)
+    for a  in range(len(state.themap.grid)):
+	for b in range(len(state.themap.grid[a])):
+	    pygame.draw.rect(screen, (100,100+state.themap.grid[a][b]*145,100),pygame.Rect(a*state.themap.cell_width,b*state.themap.cell_height,(a*state.themap.cell_width)+state.themap.cell_width,(b*state.themap.cell_height)+state.themap.cell_height),0)
 
     #Second, draw cells
     for cell in state.cells:

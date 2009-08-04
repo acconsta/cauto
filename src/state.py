@@ -23,6 +23,7 @@ class State:
 
     def next(self, speed=1):
 	print (len(self.cells))
+	print self.themap.grid
         # Cells older than AGE reproduce
         for cell in self.cells:
 	    print ('next cell')
@@ -51,7 +52,7 @@ class State:
 
 	for z in self.cells:
 	    z.age += speed
-	    z.health += self.themap.select(z.position[0],z.position[1]) - 0.5
+	    z.health *= self.themap.select(z.position[0],z.position[1])
 	    if (z.health > 100):
 		z.health = 100
 	    elif (z.health < 0):

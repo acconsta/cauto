@@ -1,3 +1,5 @@
+import math
+
 class Calcmap:
 
     def __init__(self,x,y,cell_width,cell_height):
@@ -7,16 +9,18 @@ class Calcmap:
 	self.cell_width = cell_width
 	self.cell_height = cell_height
 	for z in range(len(self.grid)):
-	    self.grid[z] = range(int(x/cell_width))
+	    self.grid[z] = range(int(math.floor(x/cell_width)))
 
 	    for a in range(len(self.grid[z])):
-		self.grid[z][a]=0
+		self.grid[z][a]=1
 
-    def consume (self,x,y,appetite=0.1):
-	self.grid[int(y/self.cell_height)][int(x/self.cell_width)] -= appetite
+    def consume (self,x,y,appetite=0.03):
+	self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))] -= appetite
+	if self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))] < 0:
+	    self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))] = 0
 
     def select (self,x,y):
-	return self.grid[int(y/self.cell_height)][int(x/self.cell_width)]
+	return self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))]
 
     def regrow(self,speed=0.05):
 	for y in range(len(self.grid)):
