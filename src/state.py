@@ -17,29 +17,36 @@ class State:
         self.cells.append(Cell((dimensions[0]-10, 10)))
         self.cells.append(Cell((dimensions[0]-10, dimensions[1]-10)))
 
-    def next(self, speed=1):
+    def next(self, speed=0.5):
+	print ('next')
         # Cells older than AGE reproduce
         for cell in self.cells:
+	    print ('next cell')
             if cell.age >= self.AGE:
+		print ('next mature cell')
                 if cell.health >= 50:
                     # Add two tangent daughter cells
-                    for i in range(2):
-                        newCell = Cell(cell.position, cell.dna.mutate())
+                    for i in range(1):
+                        #newCell = Cell(cell.position, cell.dna.mutate())
                         start = random.uniform(0, 200 * math.pi)
                         for theta in range(start, start + 200 * math.pi, 200 * math.pi / 18):
-                            newCell.position = (cell.position[0] + cell.radius * 2 * math.cos(theta / 100), \
-                                                cell.position[1] + cell.radius * 2 * math.sin(theta / 100))
+                            newCell = Cell((cell.position[0] + cell.radius * 2 * math.cos(theta / 100), \
+                                                cell.position[1] + cell.radius * 2 * math.sin(theta / 100)),\
+					    cell.dna.mutate())
                             if not self.check_collision(newCell):
                                 self.cells.append(newCell)
                                 break
                     # Second daughter, in same place as current
-#                    self.cells.append(Cell(cell.position, cell.dna.mutate()))
-                    # Kill current cell
+                    self.cells.append(Cell(cell.position, cell.dna.mutate()))
+                # Kill current cell
                     cell.health = 0
                 else:
                     cell.health = 0
             else:
-                cell.age += 1
+		break
+
+	for z in self.cells:
+	    z.age += speed
 
         # Remove dead cells
         for y in range(len(self.cells)):
@@ -66,6 +73,7 @@ class State:
         return self.cells.pop()
 
     def check_collision(self, cell1):
+	print ('Collision check')
         # Check boundary collisions
         if (cell1.position[0]-cell1.radius < 0) or (cell1.position[0] + cell1.radius > self.dimensions[0]) \
         or (cell1.position[1]-cell1.radius < 0) or (cell1.position[1] + cell1.radius > self.dimensions[1]):

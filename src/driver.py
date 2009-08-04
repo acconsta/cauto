@@ -33,6 +33,6 @@ while True:
     state.next()
     screen.fill(pygame.Color("white"))
     for cell in state.cells:
-        pygame.draw.circle(screen, pygame.Color("red"), cell.position, cell.radius)
-        pygame.draw.circle(screen, pygame.Color("black"), cell.position, cell.radius, 1)
+        pygame.draw.circle(screen, pygame.Color("purple"), cell.position, cell.radius)
+        pygame.draw.circle(screen, pygame.Color("red"), cell.position, cell.radius, 1)
     pygame.display.flip()
