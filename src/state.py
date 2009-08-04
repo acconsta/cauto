@@ -2,6 +2,7 @@
 import math
 
 from cell import Cell
+from calcmap import Calcmap
 import random
 
 class State:
@@ -16,6 +17,9 @@ class State:
         self.cells.append(Cell((10, dimensions[1]-10)))
         self.cells.append(Cell((dimensions[0]-10, 10)))
         self.cells.append(Cell((dimensions[0]-10, dimensions[1]-10)))
+	#Initiate map with full nutrients
+	self.themap = Calcmap(dimensions[0],dimensions[1])
+
 
     def next(self, speed=0.5):
 	print (len(self.cells))
@@ -46,6 +50,8 @@ class State:
 
 	for z in self.cells:
 	    z.age += speed
+	    z.health *= self.themap.grid[z.position[1],z.position[0]]
+	    self.themap.grid[z.position[1],z.position[0]] -= (z.age/10)
 
         # Remove dead cells
         for y in range(len(self.cells)):
@@ -54,6 +60,8 @@ class State:
                     self.cells.pop(y)
             except IndexError:
                 pass
+
+	self.themap.regrow()
         self.time += 1
 
     def __str__(self):
