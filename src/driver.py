@@ -19,8 +19,7 @@ def handle_events():
     global state
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit(0)
+            exit()
         elif event.type == KEYUP:
             if event.key == 275:
                 rate += 5
@@ -28,13 +27,20 @@ def handle_events():
                 rate -= 5
                 if rate < 0:
                     rate = 0
+            elif event.key == 27:
+                exit()
             print "Simulating at %s fps" % rate
         elif event.type == MOUSEBUTTONDOWN:
              state.cells.append(Cell(event.pos))
+             
+def exit():
+    pygame.quit()
+    sys.exit(0)
 
 while True:
     # Limits simulation frame rate
     clock.tick(rate)
+    print clock.get_fps()
 
     # Handle events
     handle_events()
@@ -42,12 +48,12 @@ while True:
         handle_events()
 
     screen.fill(pygame.Color("white"))
-    #First, draw map
+    # First, draw map
     for a  in range(len(state.themap.grid)):
 	for b in range(len(state.themap.grid[a])):
 	    pygame.draw.rect(screen, (100,100+state.themap.grid[a][b]*145,100),pygame.Rect(a*state.themap.cell_width,b*state.themap.cell_height,(a*state.themap.cell_width)+state.themap.cell_width,(b*state.themap.cell_height)+state.themap.cell_height),0)
 
-    #Second, draw cells
+    # Second, draw cells
     for cell in state.cells:
         pygame.draw.circle(screen, (255-cell.age*10,255-cell.age*10,255-cell.age*10), cell.position, cell.radius)
         pygame.draw.circle(screen, pygame.Color(int(cell.health*2),0,0), cell.position, cell.radius, 2)
