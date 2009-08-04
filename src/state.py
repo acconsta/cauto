@@ -54,6 +54,8 @@ class State:
 	    z.health += self.themap.select(z.position[0],z.position[1]) - 0.5
 	    if (z.health > 100):
 		z.health = 100
+	    elif (z.health < 0):
+		z.health = 0
 	    self.themap.consume(z.position[0],z.position[1])
 
         # Remove dead cells
