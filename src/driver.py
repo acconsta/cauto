@@ -34,6 +34,6 @@ while True:
     #Second, draw cells
     for cell in state.cells:
         pygame.draw.circle(screen, (255-cell.age*10,255-cell.age*10,255-cell.age*10), cell.position, cell.radius)
-        pygame.draw.circle(screen, pygame.Color(255,0,0), cell.position, cell.radius, 2)
+        pygame.draw.circle(screen, pygame.Color(255,0,0), cell.position, cell.radius, 1)
     pygame.display.flip()
     state.next()
