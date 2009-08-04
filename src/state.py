@@ -29,6 +29,7 @@ class State:
             if cell.age >= self.AGE:
 		print ('next mature cell')
                 if cell.health >= 50:
+		    print ("Binary fission time!")
                     # Add two tangent daughter cells
                     for i in range(1):
                         newCell = Cell(cell.position, cell.dna.mutate())
