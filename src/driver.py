@@ -26,8 +26,14 @@ while True:
 #			print event
 
     screen.fill(pygame.Color("white"))
+    #First, draw map
+    #for a  in range(len(state.themap.grid)):
+    #	for b in range(len(state.themap.grid[a])):
+    #       pygame.draw.rect(screen, (255,state.themap.grid[a][b]*245,255),a+state.themap.cell_width,b+state.themap.cell_height)
+
+    #Second, draw cells
     for cell in state.cells:
         pygame.draw.circle(screen, (255-cell.age*10,255-cell.age*10,255-cell.age*10), cell.position, cell.radius)
-        pygame.draw.circle(screen, pygame.Color("red"), cell.position, cell.radius, 1)
+        pygame.draw.circle(screen, pygame.Color(255,0,0), cell.position, cell.radius, 2)
     pygame.display.flip()
     state.next()

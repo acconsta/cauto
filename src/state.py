@@ -18,10 +18,10 @@ class State:
         self.cells.append(Cell((dimensions[0]-10, 10)))
         self.cells.append(Cell((dimensions[0]-10, dimensions[1]-10)))
 	#Initiate map with full nutrients
-	self.themap = Calcmap(dimensions[0],dimensions[1])
+	self.themap = Calcmap(dimensions[0],dimensions[1],20,20)
 
 
-    def next(self, speed=0.5):
+    def next(self, speed=1):
 	print (len(self.cells))
         # Cells older than AGE reproduce
         for cell in self.cells:
@@ -50,7 +50,7 @@ class State:
 
 	for z in self.cells:
 	    z.age += speed
-	    z.health *= self.themap.select(z.position[0],z.position[1])
+	    z.health += self.themap.select(z.position[0],z.position[1]) - 0.5
 	    self.themap.consume(z.position[0],z.position[1])
 
         # Remove dead cells
