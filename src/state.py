@@ -3,7 +3,7 @@ import math
 
 from cell import Cell
 from calcmap import Calcmap
-import random
+from random import *
 
 class State:
 
@@ -12,11 +12,8 @@ class State:
         self.dimensions = dimensions
         self.cells = []
         self.time = 0
-        # Start off with a cell in each corner
-        self.cells.append(Cell((10, 10)))
-        self.cells.append(Cell((10, dimensions[1]-10)))
-        self.cells.append(Cell((dimensions[0]-10, 10)))
-        self.cells.append(Cell((dimensions[0]-10, dimensions[1]-10)))
+        # Start off with a cell in the center
+        self.cells.append(Cell((dimensions[0]/2, dimensions[1]/2)))
 	#Initiate map with full nutrients
 	self.themap = Calcmap(dimensions[0],dimensions[1],20,20)
 
@@ -32,16 +29,12 @@ class State:
                 if cell.health >= 50:
 		    print ("Binary fission time!")
                     # Add two tangent daughter cells
-                    for i in range(1):
-                        newCell = Cell(cell.position, cell.dna.mutate())
-                        start = random.uniform(0, 200 * math.pi)
-                        for theta in range(start, start + 200 * math.pi, 200 * math.pi / 18):
-                            newCell.position = (cell.position[0] + cell.radius * 2 * math.cos(theta / 100), \
-                                                cell.position[1] + cell.radius * 2 * math.sin(theta / 100))
-                            if not self.check_collision(cell.position[0] + cell.radius * 2 * math.cos(theta / 100),cell.position[1] + cell.radius * 2 * math.sin(theta / 100),cell.radius):
-                                self.cells.append(newCell)
-                                break
-                    # Second daughter, in same place as current
+                    newCell = Cell(cell.position, cell.dna.mutate())
+                    theta = uniform(0, 200 * math.pi)
+                    newCell.position = (cell.position[0] + cell.radius * 2 * math.cos(theta / 100), \
+		      cell.position[1] + cell.radius * 2 * math.sin(theta / 100))
+                    self.cells.append(newCell)
+		    # Second daughter, in same place as current
                     self.cells.append(Cell(cell.position, cell.dna.mutate()))
                 # Kill current cell
                     cell.health = 0

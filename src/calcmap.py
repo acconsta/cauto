@@ -15,12 +15,17 @@ class Calcmap:
 		self.grid[z][a]=1
 
     def consume (self,x,y,appetite=0.03):
-	self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))] -= appetite
-	if self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))] < 0:
-	    self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))] = 0
-
+	try:
+	  self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))] -= appetite
+	  if self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))] < 0:
+	      self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))] = 0
+	except:
+	  pass
     def select (self,x,y):
-	return self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))]
+	try:
+	  return self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))]
+	except IndexError:
+	  return 0
 
     def regrow(self,speed=0.05):
 	for y in range(len(self.grid)):
