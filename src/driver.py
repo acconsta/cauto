@@ -3,6 +3,7 @@ import sys
 import pygame
 from pygame.locals import *
 from state import State
+from cell import Cell
 
 state = State(dimensions=(500,500))
 pygame.init()
@@ -29,7 +30,7 @@ def handle_events():
                     rate = 0
             print "Simulating at %s fps" % rate
         elif event.type == MOUSEBUTTONDOWN:
-             state.event.pos
+             state.cells.append(Cell(event.pos))
 
 while True:
     # Limits simulation frame rate
