@@ -7,30 +7,39 @@ from state import State
 state = State(dimensions=(500,500))
 pygame.init()
 screen = pygame.display.set_mode(state.dimensions)
-screen.fill(pygame.Color("white"))
-pygame.display.flip()
 pygame.display.set_caption("Cauto")
 #screen = pygame.display.get_surface().convert()
 
 clock = pygame.time.Clock()
+rate = 10 # Initial rate
 
-rate = 1
-while True:
-    # Limit frame rate
-    clock.tick(rate)
-
-    # Handle events
+def handle_events():
+    global rate
+    global state
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit(0)
-        elif event.type == KEYDOWN:
+        elif event.type == KEYUP:
             if event.key == 275:
                 rate += 5
             elif event.key == 276:
-                if rate - 5 > 0:
-                    rate -= 5
-    state.next()
+                rate -= 5
+                if rate < 0:
+                    rate = 0
+            print "Simulating at %s fps" % rate
+        elif event.type == MOUSEBUTTONDOWN:
+             state.event.pos
+
+while True:
+    # Limits simulation frame rate
+    clock.tick(rate)
+
+    # Handle events
+    handle_events()
+    while rate==0:
+        handle_events()
+
     screen.fill(pygame.Color("white"))
     #First, draw map
     for a  in range(len(state.themap.grid)):
@@ -39,6 +48,8 @@ while True:
 
     #Second, draw cells
     for cell in state.cells:
-        pygame.draw.circle(screen, pygame.Color("purple"), cell.position, cell.radius)
-        pygame.draw.circle(screen, pygame.Color("red"), cell.position, cell.radius, 1)
+        pygame.draw.circle(screen, (255-cell.age*10,255-cell.age*10,255-cell.age*10), cell.position, cell.radius)
+        pygame.draw.circle(screen, pygame.Color(int(cell.health*2),0,0), cell.position, cell.radius, 2)
+    
     pygame.display.flip()
+    state.next()
