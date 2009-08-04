@@ -9,8 +9,13 @@ class Calcmap:
 	    for a in range(len(self.grid[z])):
 		self.grid[z][a]=0
 
+    def consume (self,x,y,appetite=0.1):
+	self.grid[y][x] -= appetite
 
-    def regrow(self,speed=0.1):
+    def select (self,x,y):
+	return self.grid[y][x]
+
+    def regrow(self,speed=0.05):
 	for y in range(len(self.grid)):
 	    for x in range(len(self.grid[y])):
 		self.grid[y][x] += speed

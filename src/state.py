@@ -50,8 +50,8 @@ class State:
 
 	for z in self.cells:
 	    z.age += speed
-	    z.health *= self.themap.grid[int(z.position[1]),int(z.position[0])]
-	    self.themap.grid[int(z.position[1]),int(z.position[0])] -= (z.age/10)
+	    z.health *= self.themap.select(z.position[0],z.position[1])
+	    self.themap.consume(z.position[0],z.position[1])
 
         # Remove dead cells
         for y in range(len(self.cells)):
