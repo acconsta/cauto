@@ -50,8 +50,8 @@ while True:
     screen.fill((100, 245, 100))
     for a  in xrange(len(state.themap.grid)):
         for b in xrange(len(state.themap.grid[a])):
-            if state.themap.grid[a][b] != 1:
-                screen.fill((100,100+state.themap.grid[a][b]*145,100),pygame.Rect(a*state.themap.cell_width,b*state.themap.cell_height,state.themap.cell_width,state.themap.cell_height))
+            if state.themap.grid[a][b][0] != 1:
+                screen.fill((100,100+state.themap.grid[a][b][0]*145,100),pygame.Rect(a*state.themap.cell_width,b*state.themap.cell_height,state.themap.cell_width,state.themap.cell_height))
 
     # Second, draw cells
     for cell in state.cells:
