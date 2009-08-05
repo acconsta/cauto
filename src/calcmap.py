@@ -12,7 +12,7 @@ class Calcmap:
 	    self.grid[z] = range(int(math.floor(x/cell_width)))
 
 	    for a in range(len(self.grid[z])):
-		self.grid[z][a]=[1]
+		self.grid[z][a]=[1,0,0,0]
 
     def consume (self,x,y,appetite=0.03):
 	try:
@@ -38,7 +38,7 @@ class Calcmap:
 	try:
 	  return self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))]
 	except IndexError:
-	  return [0]
+	  return [0,0,0,0]
 
     def regrow(self,speed=0.05):
 	for y in range(len(self.grid)):
@@ -47,3 +47,6 @@ class Calcmap:
 
 		if (self.grid[y][x][0] > 1):
 		    self.grid[y][x][0] = 1
+
+                #for u in range(2):
+                #    self.grid[y][x][u+1] -= speed
