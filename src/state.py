@@ -14,7 +14,7 @@ class State:
         # Start off with a cell in the center
         self.cells.append(Cell((dimensions[0]/2, dimensions[1]/2)))
         #Initiate map with full nutrients
-        self.themap = Calcmap(dimensions[0],dimensions[1],20,20)
+        self.themap = Calcmap(dimensions[0],dimensions[1],40,40)
 
 
     def next(self, speed=1):
@@ -44,20 +44,31 @@ class State:
 
         for z in self.cells:
             z.age += speed
-            z.health *= self.themap.select(z.position[0],z.position[1])
+            z.health *= self.themap.select(z.position[0],z.position[1])[0]
             if (z.health > 100):
                 z.health = 100
             elif (z.health < 0):
                 z.health = 0
             self.themap.consume(z.position[0],z.position[1])
 
+            try:
+              self.themap.pollute(z.position[0],z.position[1],z.dna.toxin_type,z.dna.toxin_strength)
+              toxin = 0
+            
+              for toxin_strength in self.themap.select(z.position[0],z.position[1]):
+                if (toxin > 1):
+                  if not (((z.dna.wall_type) == (toxin)) or ((z.dna.toxin_type) == (toxin))):
+                    z.health -= (toxin_strength - z.dna.wall_width)*5
+                toxin = toxin + 1
+            except IndexError:
+              pass
             # Remove dead cells
-            for y in range(len(self.cells)):
-                try:
-                    if (self.cells[y].health <= 0):
-                        self.cells.pop(y)
-                except IndexError:
-                    pass
+        for y in range(len(self.cells)):
+          try:
+            if (self.cells[y].health <= 0):
+              self.cells.pop(y)
+          except IndexError:
+              pass
 
         self.themap.regrow()
         self.time += 1
