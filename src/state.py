@@ -26,7 +26,7 @@ class State:
             if cell.age >= self.AGE:
                 #print ('next mature cell')
                 if cell.health >= 50:
-                    #print ("Binary fission time!")
+                    #print ("Mitosis time!")
                     # Add two tangent daughter cells
                     newCell = Cell(cell.position, cell.dna.mutate())
                     theta = uniform(0, 200 * math.pi)
