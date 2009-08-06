@@ -32,6 +32,11 @@ def handle_events():
             print "Simulating at %s fps" % rate
         elif event.type == MOUSEBUTTONDOWN:
              state.cells.append(Cell(event.pos))
+             cell = state.cells[-1]
+             # Draw the cell immediately
+             pygame.draw.circle(screen, (cell.dna.toxin_type*75,cell.dna.toxin_strength,255), cell.position, cell.radius)
+             pygame.display.update(pygame.draw.circle(screen, (cell.dna.wall_type*75,cell.dna.wall_width*255,255), cell.position, cell.radius, 4))
+             
              
 def exit():
     pygame.quit()
@@ -58,5 +63,5 @@ while True:
         pygame.draw.circle(screen, (cell.dna.toxin_type*75,cell.dna.toxin_strength,255), cell.position, cell.radius)
         pygame.draw.circle(screen, (cell.dna.wall_type*75,cell.dna.wall_width*255,255), cell.position, cell.radius, 4)
     
-    pygame.display.flip()
+    pygame.display.update()
     state.next()
