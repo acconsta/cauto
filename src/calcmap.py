@@ -40,7 +40,7 @@ class Calcmap:
         except IndexError:
           return [0]
 
-    def regrow(self,speed=0.05):
+    def regrow(self,speed=0.1):
         for y in range(len(self.grid)):
             for x in range(len(self.grid[y])):
                 self.grid[y][x][0] += speed
