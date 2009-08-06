@@ -52,9 +52,15 @@ class State:
                 z.health = 0
             self.themap.consume(z.position[0],z.position[1])
 
-        for d in self.discs:
-            for e in self.cells:        
-                #Perform function based upon armor
+        # Toxin damage
+        for disc in self.discs:
+            for cell in self.cells:      
+                if cell.dna.wall_type != disc.type:
+                    damage = 50 - self.distance_squared(cell.position, disc.position)**2/2560000
+                    if damage > 0:
+                        cell.health -= damage
+                        if cell.health < 0:
+                            cell.health = 0
 
             #try:
             #  self.themap.pollute(z.position[0],z.position[1],z.dna.toxin_type,z.dna.toxin_strength)
@@ -70,11 +76,11 @@ class State:
         
         # Remove dead cells
         for y in range(len(self.cells)):
-          try:
-            if (self.cells[y].health <= 0):
-              self.cells.pop(y)
-          except IndexError:
-              pass
+            try:
+                if (self.cells[y].health <= 0):
+                    self.cells.pop(y)
+            except IndexError:
+                pass
 
         self.themap.regrow()
         self.time += 1
@@ -94,11 +100,11 @@ class State:
             return True
         # Check cell collisions
         for cell2 in self.cells:
-            if self.distance_squared(cell2.position[0], cell2.position[1], x, y) < (radius + cell2.radius) ** 2:
+            if self.distance_squared(cell2.position, (x, y)) < (radius + cell2.radius) ** 2:
                 return True
             return False
 
-    def distance_squared(self, x, y, x2, y2):
+    def distance_squared(self, (x, y), (x2, y2)):
         '''Returns the distance between two cells'''
         dist = (x - x2) ** 2 + (y - y2) ** 2
         if dist > 1:

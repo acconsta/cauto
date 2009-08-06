@@ -2,12 +2,12 @@ import random
 from dna import DNA
 
 class Cell:
-    def __init__(self, position=(0,0), dna=-1):
+    def __init__(self, position=(0,0), dna=-1, radius = 10):
         # Default attributes
-        self.position=(position[0],position[1])
+        self.position = position
         self.age = random.randint(0,5)
         self.health = 100
-        self.radius = 10
+        self.radius = radius
 
         # DNA
         if (dna == -1):
