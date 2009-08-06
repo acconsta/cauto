@@ -51,17 +51,17 @@ class State:
                 z.health = 0
             self.themap.consume(z.position[0],z.position[1])
 
-            try:
-              self.themap.pollute(z.position[0],z.position[1],z.dna.toxin_type,z.dna.toxin_strength)
-              toxin = 0
-            
-              for toxin_strength in self.themap.select(z.position[0],z.position[1]):
-                if (toxin > 1):
-                  if not (((z.dna.wall_type) == (toxin)) or ((z.dna.toxin_type) == (toxin))):
-                    z.health -= (toxin_strength - z.dna.wall_width)*5
-                toxin = toxin + 1
-            except IndexError:
-              pass
+            #try:
+            #  self.themap.pollute(z.position[0],z.position[1],z.dna.toxin_type,z.dna.toxin_strength)
+            #  toxin = 0
+            #
+            #  for toxin_strength in self.themap.select(z.position[0],z.position[1]):
+            #    if (toxin > 1):
+            #      if not (((z.dna.wall_type) == (toxin)) or ((z.dna.toxin_type) == (toxin))):
+            #        z.health -= (toxin_strength - z.dna.wall_width)*5
+            #    toxin = toxin + 1
+            #except IndexError:
+            #  pass
         
         # Remove dead cells
         for y in range(len(self.cells)):

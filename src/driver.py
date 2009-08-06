@@ -60,8 +60,8 @@ while True:
 
     # Second, draw cells
     for cell in state.cells:
-        pygame.draw.circle(screen, (cell.dna.toxin_type*75,cell.dna.toxin_strength,255), cell.position, cell.radius)
-        pygame.draw.circle(screen, (cell.dna.wall_type*75,cell.dna.wall_width*255,255), cell.position, cell.radius, 4)
+        pygame.draw.circle(screen, (255-(cell.age*10),255-(cell.age*10),255-(cell.age*10)), cell.position, cell.radius)
+        pygame.draw.circle(screen, (cell.health *2.5, cell.health *2.5, cell.health *2.5), cell.position, cell.radius, 4)
     
     pygame.display.update()
     state.next()
