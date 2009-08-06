@@ -10,6 +10,7 @@ class State:
         self.AGE = AGE
         self.dimensions = dimensions
         self.cells = []
+        self.discs = []
         self.time = 0
         # Start off with a cell in the center
         self.cells.append(Cell((dimensions[0]/2, dimensions[1]/2)))
@@ -50,6 +51,10 @@ class State:
             elif (z.health < 0):
                 z.health = 0
             self.themap.consume(z.position[0],z.position[1])
+
+        for d in self.discs:
+            for e in self.cells:        
+                #Perform function based upon armor
 
             #try:
             #  self.themap.pollute(z.position[0],z.position[1],z.dna.toxin_type,z.dna.toxin_strength)
