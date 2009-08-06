@@ -62,7 +62,8 @@ class State:
                 toxin = toxin + 1
             except IndexError:
               pass
-            # Remove dead cells
+        
+        # Remove dead cells
         for y in range(len(self.cells)):
           try:
             if (self.cells[y].health <= 0):
