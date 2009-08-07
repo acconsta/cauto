@@ -14,8 +14,8 @@ font = pygame.font.Font(None, 20)
 state = State(dimensions=(500,500))
 pygame.init()
 screen = pygame.display.set_mode(state.dimensions)
+screen.convert_alpha()
 pygame.display.set_caption("Cauto")
-#screen = pygame.display.get_surface().convert()
 
 clock = pygame.time.Clock()
 rate = 10 # Initial rate
@@ -48,8 +48,6 @@ def handle_events():
             if rate <= 0:
                 pygame.display.update(screen.blit(font.render("0   FPS", True, ((0,0,0), \
 pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[cursor_type], (50, 195, 50)), (0,0)))
-
-
         elif event.type == MOUSEBUTTONDOWN:
             if event.button == 1:
                 state.cells.append(Cell(event.pos, DNA(wall_type=cursor_type)))
@@ -63,7 +61,7 @@ pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[cursor_type
                     state.discs.append(Disc(event.pos, cursor_type))
                 else:
                     state.discs.append(Disc(event.pos, randint(1,3)))
-                # Draw the disk immediately
+                # Draw the disc immediately
                 color = (0, pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[state.discs[-1].type]
                 pygame.display.update(pygame.draw.circle(screen, color, state.discs[-1].position, state.discs[-1].radius))
 
@@ -87,15 +85,21 @@ pygame.Rect(a*state.themap.cell_width,b*state.themap.cell_height,state.themap.ce
     # Second, draw antibiotic discs
     for disc in state.discs:
         color = (0, pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[disc.type]
+        effect_area = pygame.Surface((200,200))
+        effect_area.fill((255,255,255))
+        effect_area.set_colorkey((255,255,255))
+        pygame.draw.circle(effect_area, color, (100,100), 100)
+        effect_area.set_alpha(75)
+        screen.blit(effect_area, (disc.position[0]-100,disc.position[1]-100))
         pygame.draw.circle(screen, color, disc.position, disc.radius)
-
+        
     # Third, draw cells
     for cell in state.cells:
-        body = (255-(cell.age*10),)*3
-        pygame.draw.circle(screen, body, cell.position, cell.radius-3)
-        border = (pygame.Color("black"), pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[cell.dna.wall_type]
-        pygame.draw.circle(screen, border, cell.position, cell.radius, 4)
-
+        body_color = (255-(cell.age*10),)*3
+        pygame.draw.circle(screen, body_color, cell.position, cell.radius-3)
+        border_color = (pygame.Color("black"), pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[cell.dna.wall_type]
+        pygame.draw.circle(screen, border_color, cell.position, cell.radius, 4)
+    
     # Finally draw FPS indicator
     screen.blit(font.render("%s FPS" % int(round(clock.get_fps())), True,  ((0,0,0), \
 pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[cursor_type], (50, 195, 50)), (0,0))
