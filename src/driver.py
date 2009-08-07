@@ -85,7 +85,7 @@ pygame.Rect(a*state.themap.cell_width,b*state.themap.cell_height,state.themap.ce
         effect_area.fill((255,255,255))
         effect_area.set_colorkey((255,255,255))
         pygame.draw.circle(effect_area, color, (100,100), 100)
-        effect_area.set_alpha(75)
+        effect_area.set_alpha(40)
         screen.blit(effect_area, (disc.position[0]-100,disc.position[1]-100))
         pygame.draw.circle(screen, color, disc.position, disc.radius)
         
