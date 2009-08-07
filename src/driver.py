@@ -22,6 +22,8 @@ oldrate = 0
 
 cursor_type = 0
 
+disc_alpha = 40
+
 def handle_events():
     global rate, state, cursor_type, oldrate
     for event in pygame.event.get():
@@ -41,6 +43,17 @@ def handle_events():
                     oldrate, rate = rate, 0
             elif event.key == 27:
                 exit()
+            elif event.key == 57
+                if (disc_alpha + 20 >= 255):
+                    disc_alpha = 255
+                else:
+                    disc_alpha += 20
+            elif event.key == 48
+                if (disc_alpha - 20 <= 0):
+                    disc_alpha = 0
+                else:
+                    disc_alpha -= 20
+
             elif 49 <= event.key <= 52:
                 cursor_type = (49,50,51,52).index(event.key)
             # Also show 0 FPS
