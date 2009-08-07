@@ -19,11 +19,12 @@ pygame.display.set_caption("Cauto")
 
 clock = pygame.time.Clock()
 rate = 10 # Initial rate
+oldrate = 0
 
 cursor_type = 0
 
 def handle_events():
-    global rate, state, cursor_type
+    global rate, state, cursor_type, oldrate
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
@@ -34,13 +35,19 @@ def handle_events():
                 rate -= 5
                 if rate <= 0:
                     rate = 0
+            elif event.key == 32:
+                if oldrate:
+                    rate, oldrate = oldrate, 0
+                else:
+                    oldrate, rate = rate, 0
             elif event.key == 27:
                 exit()
             elif 49 <= event.key <= 52:
                 cursor_type = (49,50,51,52).index(event.key)
             # Also show 0 FPS
             if rate <= 0:
-                pygame.display.update(screen.blit(font.render("0   FPS", True,  ((0,0,0), pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[cursor_type], (50, 195, 50)), (0,0)))
+                pygame.display.update(screen.blit(font.render("0   FPS", True, ((0,0,0), \
+pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[cursor_type], (50, 195, 50)), (0,0)))
 
 
         elif event.type == MOUSEBUTTONDOWN:
@@ -74,7 +81,8 @@ while True:
     for a in xrange(len(state.themap.grid)):
         for b in xrange(len(state.themap.grid[a])):
             if state.themap.grid[b][a][0] != 1:
-                screen.fill((50,50+state.themap.grid[b][a][0]*145,50),pygame.Rect(a*state.themap.cell_width,b*state.themap.cell_height,state.themap.cell_width,state.themap.cell_height))
+                screen.fill((50,50+state.themap.grid[b][a][0]*145,50), \
+pygame.Rect(a*state.themap.cell_width,b*state.themap.cell_height,state.themap.cell_width,state.themap.cell_height))
     
     # Second, draw antibiotic discs
     for disc in state.discs:
@@ -89,7 +97,8 @@ while True:
         pygame.draw.circle(screen, border, cell.position, cell.radius, 4)
 
     # Finally draw FPS indicator
-    screen.blit(font.render("%s FPS" % int(round(clock.get_fps())), True,  ((0,0,0), pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[cursor_type], (50, 195, 50)), (0,0))
+    screen.blit(font.render("%s FPS" % int(round(clock.get_fps())), True,  ((0,0,0), \
+pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[cursor_type], (50, 195, 50)), (0,0))
 
     pygame.display.update()
     state.next()
