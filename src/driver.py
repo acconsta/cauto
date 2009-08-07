@@ -14,8 +14,7 @@ font = pygame.font.Font(None, 20)
 state = State(dimensions=(500,500))
 pygame.init()
 screen = pygame.display.set_mode(state.dimensions)
-screen.convert_alpha()
-pygame.display.set_caption("Cauto")
+pygame.display.set_caption("Cauto: Extended Cellular Automata")
 
 clock = pygame.time.Clock()
 rate = 10 # Initial rate
