@@ -1,9 +1,11 @@
 #!/usr/bin/env python
-import sys
+from sys import exit
+from random import randint
 import pygame
 from pygame.locals import *
 from state import State
 from cell import Cell
+from dna import DNA
 from disc import Disc
 
 state = State(dimensions=(500,500))
@@ -15,9 +17,10 @@ pygame.display.set_caption("Cauto")
 clock = pygame.time.Clock()
 rate = 10 # Initial rate
 
+cursor_type = 0
+
 def handle_events():
-    global rate
-    global state
+    global rate, state, cursor_type
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
@@ -30,21 +33,26 @@ def handle_events():
                     rate = 0
             elif event.key == 27:
                 exit()
-            print "Simulating at %s fps" % rate
+            elif 49 <= event.key <= 52:
+                cursor_type = (49,50,51,52).index(event.key)
+                print cursor_type
+#             TODO reimplement "Simulating at %s fps" % rate
         elif event.type == MOUSEBUTTONDOWN:
             if event.button == 1:
-                state.cells.append(Cell(event.pos))
-                cell = state.cells[-1]
+                state.cells.append(Cell(event.pos, DNA(wall_type=cursor_type)))
                 # Draw the cell immediately
-                pygame.draw.circle(screen, (255-(cell.age*10),255-(cell.age*10),255-(cell.age*10)), cell.position, cell.radius)
-                pygame.display.update(pygame.draw.circle(screen, (cell.health *2.5, cell.health *2.5, cell.health *2.5), cell.position, cell.radius, 4))
+                body = (255-(cell.age*10),)*3
+                pygame.draw.circle(screen, body, state.cells[-1].position, state.cells[-1].radius-3)
+                border = (pygame.Color("black"), pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[state.cells[-1].dna.wall_type]
+                pygame.display.update(pygame.draw.circle(screen, border, state.cells[-1].position, state.cells[-1].radius, 4))
             elif event.button == 3:
-                state.discs.append(Disc(event.pos))
-                disc = state.discs[-1]
-             
-def exit():
-    pygame.quit()
-    sys.exit(0)
+                if cursor_type:
+                    state.discs.append(Disc(event.pos, cursor_type))
+                else:
+                    state.discs.append(Disc(event.pos, randint(1,3)))
+                # Draw the disk immediately
+                color = (0, pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[state.discs[-1].type]
+                pygame.display.update(pygame.draw.circle(screen, color, state.discs[-1].position, state.discs[-1].radius))
 
 while True:
     # Limits simulation frame rate
@@ -64,15 +72,14 @@ while True:
     
     # Second, draw antibiotic discs
     for disc in state.discs:
-        color = [0, pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow")][disc.type]
+        color = (0, pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[disc.type]
         pygame.draw.circle(screen, color, disc.position, disc.radius)
 
     # Third, draw cells
     for cell in state.cells:
-        body = (255-(cell.age*10),255-(cell.age*10),255-(cell.age*10))
-        pygame.draw.circle(screen, body, cell.position, cell.radius)
-        
-        border = [pygame.Color("black"), pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow")][cell.dna.wall_type]
+        body = (255-(cell.age*10),)*3
+        pygame.draw.circle(screen, body, cell.position, cell.radius-3)
+        border = (pygame.Color("black"), pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[cell.dna.wall_type]
         pygame.draw.circle(screen, border, cell.position, cell.radius, 4)
     
     pygame.display.update()
