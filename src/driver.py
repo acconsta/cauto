@@ -43,12 +43,12 @@ def handle_events():
                     oldrate, rate = rate, 0
             elif event.key == 27:
                 exit()
-            elif event.key == 57:
+            elif event.key == 48:
                 if (disc_alpha + 20 >= 255):
                     disc_alpha = 255
                 else:
                     disc_alpha += 20
-            elif event.key == 48:
+            elif event.key == 57:
                 if (disc_alpha - 20 <= 0):
                     disc_alpha = 0
                 else:
