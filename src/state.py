@@ -86,6 +86,14 @@ class State:
             try:
                 if (self.cells[y].health <= 0):
                     self.cells.pop(y)
+                elif (self.cells[y].position[0] < 0):
+                    self.cells.pop(y)
+                elif (self.cells[y].position[1] < 0):
+                    self.cells.pop(y)
+                elif (self.cells[y].position[0] > self.dimensions[0]):
+                    self.cells.pop(y)
+                elif (self.cells[y].position[1] > self.dimensions[1]):
+                    self.cells.pop(y)
             except IndexError:
                 pass
 
