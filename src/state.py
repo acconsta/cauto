@@ -54,13 +54,20 @@ class State:
 
         # Toxin damage
         for disc in self.discs:
-            for cell in self.cells:      
-                if cell.dna.wall_type != disc.type:
+            for cell in self.cells:
+                if disc.type:
+                    if cell.dna.wall_type != disc.type:
+                        damage = 50 - self.distance_squared(cell.position, disc.position)**2/2560000
+                        if damage > 0:
+                            cell.health -= damage
+                            if cell.health < 0:
+                                cell.health = 0
+                else:
                     damage = 50 - self.distance_squared(cell.position, disc.position)**2/2560000
                     if damage > 0:
                         cell.health -= damage
                         if cell.health < 0:
-                            cell.health = 0
+                            cell.health = 0                        
 
             #try:
             #  self.themap.pollute(z.position[0],z.position[1],z.dna.toxin_type,z.dna.toxin_strength)

@@ -56,10 +56,7 @@ pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[cursor_type
                 border = (pygame.Color("black"), pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[state.cells[-1].dna.wall_type]
                 pygame.display.update(pygame.draw.circle(screen, border, state.cells[-1].position, state.cells[-1].radius, 4))
             elif event.button == 3:
-                if cursor_type:
-                    state.discs.append(Disc(event.pos, cursor_type))
-                else:
-                    state.discs.append(Disc(event.pos, randint(1,3)))
+                state.discs.append(Disc(event.pos, cursor_type))
                 # Draw the disc immediately
                 color = (0, pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[state.discs[-1].type]
                 pygame.display.update(pygame.draw.circle(screen, color, state.discs[-1].position, state.discs[-1].radius))
