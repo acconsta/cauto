@@ -74,8 +74,8 @@ while True:
     screen.fill((255, 255, 255))
     for a in xrange(len(state.themap.grid)):
         for b in xrange(len(state.themap.grid[a])):
-            if state.themap.grid[b][a][0] != 1:
-                screen.fill((155+state.themap.grid[b][a][0]*100,155+state.themap.grid[b][a][0]*100,155+state.themap.grid[b][a][0]*100), \
+            if state.themap.grid[b][a] != 1:
+                screen.fill((155+state.themap.grid[b][a]*100,155+state.themap.grid[b][a]*100,155+state.themap.grid[b][a]*100), \
 pygame.Rect(a*state.themap.cell_width,b*state.themap.cell_height,state.themap.cell_width,state.themap.cell_height))
     
     # Second, draw antibiotic discs

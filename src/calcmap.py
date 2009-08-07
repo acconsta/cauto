@@ -12,25 +12,25 @@ class Calcmap:
             self.grid[z] = range(int(math.floor(x/cell_width)))
 
             for a in range(len(self.grid[z])):
-                self.grid[z][a]=[1]
+                self.grid[z][a]=1
 
-    def consume (self,x,y,appetite=0.03):
+    def consume (self,x,y,appetite=0.05):
         try:
-          self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))][0] -= appetite
-          if self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))][0] < 0:
-              self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))][0] = 0
+          self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))] -= appetite
+          if self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))] < 0:
+              self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))] = 0
         except:
           pass
 
-    def pollute (self,x,y,toxin_type,toxin_strength):
-        try:
-          for a  in range(-1,2):
-            for b in range(-1,2):
-              self.grid[int(math.floor(y/self.cell_height))+a][int(math.floor(x/self.cell_width))+b][toxin_type+1] += toxin_strength
-          if self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))][toxin_type+1] < 0:
-              self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))][toxin_type+1] = 0
-        except:
-          pass
+    #def pollute (self,x,y,toxin_type,toxin_strength):
+    #    try:
+    #      for a  in range(-1,2):
+    #        for b in range(-1,2):
+    #          self.grid[int(math.floor(y/self.cell_height))+a][int(math.floor(x/self.cell_width))+b][toxin_type+1] += toxin_strength
+    #      if self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))][toxin_type+1] < 0:
+    #          self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))][toxin_type+1] = 0
+    #    except:
+    #      pass
 
 
 
@@ -38,12 +38,12 @@ class Calcmap:
         try:
           return self.grid[int(math.floor(y/self.cell_height))][int(math.floor(x/self.cell_width))]
         except IndexError:
-          return [0]
+          return 0
 
-    def regrow(self,speed=0.2):
+    def regrow(self,speed=0.1):
         for y in range(len(self.grid)):
             for x in range(len(self.grid[y])):
-                self.grid[y][x][0] += speed
+                self.grid[y][x] += speed
 
-                if (self.grid[y][x][0] > 1):
-                    self.grid[y][x][0] = 1
+                if (self.grid[y][x] > 1):
+                    self.grid[y][x] = 1
