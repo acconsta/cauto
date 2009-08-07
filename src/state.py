@@ -45,7 +45,7 @@ class State:
 
         for z in self.cells:
             z.age += speed
-            z.health *= self.themap.select(z.position[0],z.position[1])[0]
+            z.health *= self.themap.select(z.position[0],z.position[1])
             if (z.health > 100):
                 z.health = 100
             elif (z.health < 0):
