@@ -25,7 +25,7 @@ cursor_type = 0
 disc_alpha = 40
 
 def handle_events():
-    global rate, state, cursor_type, oldrate
+    global rate, state, cursor_type, oldrate, disc_alpha
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
@@ -43,12 +43,12 @@ def handle_events():
                     oldrate, rate = rate, 0
             elif event.key == 27:
                 exit()
-            elif event.key == 57
+            elif event.key == 57:
                 if (disc_alpha + 20 >= 255):
                     disc_alpha = 255
                 else:
                     disc_alpha += 20
-            elif event.key == 48
+            elif event.key == 48:
                 if (disc_alpha - 20 <= 0):
                     disc_alpha = 0
                 else:
@@ -98,7 +98,7 @@ pygame.Rect(a*state.themap.cell_width,b*state.themap.cell_height,state.themap.ce
         effect_area.fill((255,255,255))
         effect_area.set_colorkey((255,255,255))
         pygame.draw.circle(effect_area, color, (100,100), 100)
-        effect_area.set_alpha(40)
+        effect_area.set_alpha(disc_alpha)
         screen.blit(effect_area, (disc.position[0]-100,disc.position[1]-100))
         pygame.draw.circle(screen, color, disc.position, disc.radius)
         
