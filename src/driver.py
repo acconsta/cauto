@@ -8,6 +8,9 @@ from cell import Cell
 from dna import DNA
 from disc import Disc
 
+pygame.font.init()
+font = pygame.font.Font(None, 20)
+
 state = State(dimensions=(500,500))
 pygame.init()
 screen = pygame.display.set_mode(state.dimensions)
@@ -29,14 +32,17 @@ def handle_events():
                 rate += 5
             elif event.key == 276:
                 rate -= 5
-                if rate < 0:
+                if rate <= 0:
                     rate = 0
             elif event.key == 27:
                 exit()
             elif 49 <= event.key <= 52:
                 cursor_type = (49,50,51,52).index(event.key)
-                print cursor_type
-#             TODO reimplement "Simulating at %s fps" % rate
+            # Also show 0 FPS
+            if rate <= 0:
+                pygame.display.update(screen.blit(font.render("0   FPS", True,  ((0,0,0), pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[cursor_type], (50, 195, 50)), (0,0)))
+
+
         elif event.type == MOUSEBUTTONDOWN:
             if event.button == 1:
                 state.cells.append(Cell(event.pos, DNA(wall_type=cursor_type)))
@@ -81,6 +87,9 @@ while True:
         pygame.draw.circle(screen, body, cell.position, cell.radius-3)
         border = (pygame.Color("black"), pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[cell.dna.wall_type]
         pygame.draw.circle(screen, border, cell.position, cell.radius, 4)
-    
+
+    # Finally draw FPS indicator
+    screen.blit(font.render("%s FPS" % int(round(clock.get_fps())), True,  ((0,0,0), pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[cursor_type], (50, 195, 50)), (0,0))
+
     pygame.display.update()
     state.next()
