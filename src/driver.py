@@ -46,12 +46,12 @@ def handle_events():
             # Also show 0 FPS
             if rate <= 0:
                 pygame.display.update(screen.blit(font.render("0   FPS", True, ((0,0,0), \
-pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[cursor_type], (50, 195, 50)), (0,0)))
+pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[cursor_type], (255, 255, 255)), (0,0)))
         elif event.type == MOUSEBUTTONDOWN:
             if event.button == 1:
                 state.cells.append(Cell(event.pos, DNA(wall_type=cursor_type)))
                 # Draw the cell immediately
-                body = (255-(cell.age*10),)*3
+                body = (255-(state.cells[-1].age*10),)*3
                 pygame.draw.circle(screen, body, state.cells[-1].position, state.cells[-1].radius-3)
                 border = (pygame.Color("black"), pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[state.cells[-1].dna.wall_type]
                 pygame.display.update(pygame.draw.circle(screen, border, state.cells[-1].position, state.cells[-1].radius, 4))
@@ -74,11 +74,11 @@ while True:
         handle_events()
 
     # First, draw map
-    screen.fill((50, 195, 50))
+    screen.fill((255, 255, 255))
     for a in xrange(len(state.themap.grid)):
         for b in xrange(len(state.themap.grid[a])):
             if state.themap.grid[b][a][0] != 1:
-                screen.fill((50,50+state.themap.grid[b][a][0]*145,50), \
+                screen.fill((155+state.themap.grid[b][a][0]*100,)*3, \
 pygame.Rect(a*state.themap.cell_width,b*state.themap.cell_height,state.themap.cell_width,state.themap.cell_height))
     
     # Second, draw antibiotic discs
@@ -101,7 +101,7 @@ pygame.Rect(a*state.themap.cell_width,b*state.themap.cell_height,state.themap.ce
     
     # Finally draw FPS indicator
     screen.blit(font.render("%s FPS" % int(round(clock.get_fps())), True,  ((0,0,0), \
-pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[cursor_type], (50, 195, 50)), (0,0))
+pygame.Color("red"), pygame.Color("orange"), pygame.Color("yellow"))[cursor_type], (255, 255, 255)), (0,0))
 
     pygame.display.update()
     state.next()

@@ -13,7 +13,7 @@ class State:
         self.discs = []
         self.time = 0
         # Start off with a cell in the center
-        self.cells.append(Cell((dimensions[0]/2, dimensions[1]/2)))
+        #self.cells.append(Cell((dimensions[0]/2, dimensions[1]/2)))
         #Initiate map with full nutrients
         self.themap = Calcmap(dimensions[0],dimensions[1],40,40)
 
