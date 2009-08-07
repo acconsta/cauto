@@ -11,9 +11,9 @@ from disc import Disc
 pygame.font.init()
 font = pygame.font.Font(None, 20)
 
-state = State(dimensions=(500,500))
+state = State(dimensions=(600,600))
 pygame.init()
-screen = pygame.display.set_mode(state.dimensions)
+screen = pygame.display.set_mode(state.dimensions, pygame.FULLSCREEN)
 pygame.display.set_caption("Cauto: Extended Cellular Automata")
 
 clock = pygame.time.Clock()
