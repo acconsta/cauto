@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from sys import exit
+from sys import exit, argv
 from random import randint
 import pygame
 from pygame.locals import *
@@ -13,7 +13,12 @@ font = pygame.font.Font(None, 20)
 
 state = State(dimensions=(600,600))
 pygame.init()
-screen = pygame.display.set_mode(state.dimensions, pygame.FULLSCREEN)
+
+if len(argv) > 1:
+    if argv[1] == "full":
+        screen = pygame.display.set_mode(state.dimensions, pygame.FULLSCREEN)
+else:
+    screen = pygame.display.set_mode(state.dimensions)
 pygame.display.set_caption("Cauto: Extended Cellular Automata")
 
 clock = pygame.time.Clock()
